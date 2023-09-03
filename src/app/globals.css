@@ -67,8 +67,12 @@
 }
 
 // 초기 높이 설정 *필수*
-html,
-body,
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+}
 :root {
   height: 100%;
 }
