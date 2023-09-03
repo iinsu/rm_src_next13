@@ -4,8 +4,10 @@ import TodoList from "./components/todoList";
 const TodoPage = () => {
   return (
     <>
-      <TodoInput />
-      <TodoList />
+      <div className="bg-blue-200 p-3 rounded-md">
+        <TodoInput />
+        <TodoList />
+      </div>
     </>
   );
 };

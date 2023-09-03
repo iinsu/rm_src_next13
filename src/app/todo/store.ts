@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
-interface TodoProps {
-  id: number;
+export interface TodoProps {
+  id: string;
   text: string;
 }
 
