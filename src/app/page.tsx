@@ -8,6 +8,9 @@ export default function Home() {
       <Link href="/todo">
         <Button>ToDo</Button>
       </Link>
+      <Link href="/table">
+        <Button>Table</Button>
+      </Link>
     </>
   );
 }
