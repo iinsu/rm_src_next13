@@ -7,17 +7,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useTodoListStore } from "../store";
 
+import { Input } from "@/components/ui/input";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+
 const formSchema = z.object({
-  text: z.string().trim().min(1, { message: "입력해주세요" }),
+  text: z.string().trim().min(1, { message: "TODO를 입력해주세요" }),
 });
 
 const TodoInput = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<z.infer<typeof formSchema> & FieldValues>({
+  const form = useForm<z.infer<typeof formSchema> & FieldValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       text: "",
@@ -33,18 +37,39 @@ const TodoInput = () => {
     };
 
     addTodo(todo);
-    reset();
+    form.reset();
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleAddTodo)}>
-        <input {...register("text")} className="h-7" />
-        <Button type="submit" size="sm" className="ml-2 h-7">
-          등록
-        </Button>
-      </form>
-      <div>{errors?.text?.message}</div>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(handleAddTodo)}
+          className="flex gap-2"
+        >
+          <FormField
+            control={form.control}
+            name="text"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    {...field}
+                    className="h-7"
+                    placeholder="Plz Add Todo"
+                  />
+                </FormControl>
+
+                <FormMessage className="pl-2 text-xs font-semibold" />
+              </FormItem>
+            )}
+          />
+
+          <Button type="submit" size="sm" className="h-7">
+            <span className="w-[2rem]">등록</span>
+          </Button>
+        </form>
+      </Form>
     </>
   );
 };

@@ -13,14 +13,14 @@ const TodoList = () => {
 
   return (
     <>
-      <ul className="mt-3">
+      <ul className="mx-2 mt-3">
         {todoList.map((todo) => (
-          <li key={todo.id} className=" flex items-center justify-between">
+          <li key={todo.id} className="flex items-center justify-between ">
             <span>{todo.text}</span>
             <Button
               onClick={() => handleDeleteClick(todo)}
               variant="destructive"
-              className="h-0 w-0 hover:bg-red-700 "
+              className="w-0 h-0 hover:bg-red-700 "
             >
               X
             </Button>
