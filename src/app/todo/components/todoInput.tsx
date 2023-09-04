@@ -5,7 +5,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
-import { TodoProps, useTodoListStore } from "../store";
+import { TodoProps } from "../store";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -62,8 +62,6 @@ const TodoInput = () => {
       text: "",
     },
   });
-
-  const { addTodo } = useTodoListStore();
 
   const handleAddTodo: SubmitHandler<FieldValues> = async (data) => {
     const todo = {
