@@ -5,7 +5,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
-import { useTodoListStore } from "../store";
+import { TodoProps, useTodoListStore } from "../store";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -20,6 +20,41 @@ const formSchema = z.object({
   text: z.string().trim().min(1, { message: "TODO를 입력해주세요" }),
 });
 
+const fetchAddTodo = async (todo: TodoProps) => {
+  const result = await fetch("http://localhost:4000/todo", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      id: todo.id,
+      text: todo.text,
+      createdAt: new Date(),
+    }),
+  });
+  return result.json();
+};
+
+// TODO 많이 만들기
+/* const makeDummy = () => {
+  const todos = { todo: [] };
+  for (let i = 0; i < 500; i++) {
+    todos.todo.push({
+      id: self.crypto.randomUUID(),
+      text: `todo ${i}`,
+      createdAt: new Date(),
+    });
+  }
+  return todos;
+};
+
+const fetchManyTodo = async (todos) => {
+  const result = await fetch("http://localhost:4000/todo", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(todos),
+  });
+  return result.json();
+}; */
+
 const TodoInput = () => {
   const form = useForm<z.infer<typeof formSchema> & FieldValues>({
     resolver: zodResolver(formSchema),
@@ -30,13 +65,19 @@ const TodoInput = () => {
 
   const { addTodo } = useTodoListStore();
 
-  const handleAddTodo: SubmitHandler<FieldValues> = (data) => {
+  const handleAddTodo: SubmitHandler<FieldValues> = async (data) => {
     const todo = {
       id: self.crypto.randomUUID(),
       text: data.text,
     };
 
-    addTodo(todo);
+    /* //대용량 TODO 생성기
+    const dummy = makeDummy().todo;
+     const manyTodo = await fetchManyTodo(dummy);
+     console.log(manyTodo); */
+
+    const json = await fetchAddTodo(todo);
+    console.log(json);
     form.reset();
   };
 

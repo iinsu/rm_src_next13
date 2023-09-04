@@ -7,7 +7,7 @@ export interface TodoProps {
 
 interface TodoListProps {
   todoList: TodoProps[];
-  addTodo: (newTodo: TodoProps) => void;
+  addTodo: (newTodo: TodoProps[]) => void;
   deleteTodo: (todo: TodoProps) => void;
 }
 
@@ -15,7 +15,7 @@ export const useTodoListStore = create<TodoListProps>((set) => ({
   todoList: [],
   // TODO 추가
   addTodo: (newTodo) =>
-    set((props) => ({ todoList: [...props.todoList, newTodo] })),
+    set((props) => ({ todoList: [...props.todoList, ...newTodo] })),
 
   // TODO 제거
   deleteTodo: (todo) =>
